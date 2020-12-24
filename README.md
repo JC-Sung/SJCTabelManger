@@ -1,5 +1,5 @@
 # SJCTabelManger
-任意的管理你的UITableView，自定义列表，更改顺序无需更改UITableView的代理和数据源方法,自定义组头组尾，你可以扩展自己最常用的cell到SJCTabelManger中，然后在要使用的地方，一行代码就可以把定制的cell加到视图的任意位置
+任意的管理你的UITableView，自定义列表，更改顺序无需更改UITableView的代理和数据源方法,自定义组头组尾，你可以扩展自己最常用的cell到SJCTabelManger中，然后在要使用的地方，一行代码就可以把定制的cell加到视图的任意位置(最适用与静态界面例如设置界面的快速的搭建，动态活动列表界面，不适用于翻页的，大量的，单一cell的列表视图)
 
 # 使用方法
 ```objective-c
