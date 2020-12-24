@@ -1,0 +1,2 @@
+# SJCTabelManger
+任意的管理你的UITableView，自定义列表，更改顺序无需更改UITableView的代理和数据源方法
