@@ -15,7 +15,10 @@
 NS_ASSUME_NONNULL_BEGIN
 
 typedef UITableViewCell *_Nullable(^cellSetup)(UITableView *tableView, NSIndexPath *indexPath);
+
 typedef void (^cellClickBlock)(UITableView *tableView, NSIndexPath *indexPath);
+
+typedef UIContextMenuConfiguration *_Nullable(^contextMenuConfig)(UITableView *tableView, NSIndexPath *indexPath, CGPoint point);
 
 /// Cell
 @class SJCTabelSection;
@@ -24,6 +27,7 @@ typedef void (^cellClickBlock)(UITableView *tableView, NSIndexPath *indexPath);
 @property(assign,nonatomic) CGFloat rowHeight;
 @property (nonatomic, copy) cellSetup cellForRowAtIndexPath;
 @property (nonatomic, copy) cellClickBlock didSelectRowAtIndexPath;
+@property (nonatomic, copy) contextMenuConfig contextMenuConfigurationForRowAtIndexPath;
 
 /// 在cell上拿到section的tableViewManager
 @property (weak, readwrite, nonatomic) SJCTabelSection *section;
@@ -66,7 +70,7 @@ typedef UIView *_Nullable(^footerSetup)(UITableView *tableView, NSInteger sectio
 - (void)addRowsFromArray:(NSArray <SJCTabelItem *>*)rows;
 
 /// 快速初始化一些常用的cell
-/// @param str str 
+/// @param str str
 - (void)addItemText:(NSString *)str;
 
 @end
@@ -78,7 +82,6 @@ typedef UIView *_Nullable(^footerSetup)(UITableView *tableView, NSInteger sectio
 
 @property (strong, readonly, nonatomic) NSArray <SJCTabelSection *>*sections;
 @property (weak, readwrite, nonatomic) UITableView *tableView;
-
 @property (strong, readwrite, nonatomic) NSMutableDictionary *registeredClasses;
 
 /// 类方法初始化
@@ -103,6 +106,11 @@ typedef UIView *_Nullable(^footerSetup)(UITableView *tableView, NSInteger sectio
 - (id)objectAtKeyedSubscript:(id <NSCopying>)key;
 
 - (void)setObject:(id)obj forKeyedSubscript:(id <NSCopying>)key;
+
+/// 注册组头尾视图
+/// @param aClass aClass
+/// @param identifier identifier
+- (void)registerClass:(nullable Class)aClass forHeaderFooterViewReuseIdentifier:(NSString *)identifier;
 
 /// 添加一组
 /// @param section section

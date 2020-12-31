@@ -164,6 +164,15 @@ static NSString *UITableViewCellID = @"UITableViewCell";
     return self.registeredClasses[item.class];
 }
 
+- (void)registerClass:(nullable Class)aClass forHeaderFooterViewReuseIdentifier:(NSString *)identifier {
+    NSBundle *bundle = [NSBundle mainBundle];
+    //xib的名字需要和对应的类名一致
+    if ([bundle pathForResource:NSStringFromClass(aClass) ofType:@"nib"]) {
+        [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass(aClass) bundle:bundle] forHeaderFooterViewReuseIdentifier:identifier];
+    }else{
+        [self.tableView registerClass:aClass forHeaderFooterViewReuseIdentifier:identifier];
+    }
+}
 
 - (void)addSection:(SJCTabelSection *)section {
     section.tableViewManager = self;
@@ -234,5 +243,10 @@ static NSString *UITableViewCellID = @"UITableViewCell";
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
     return self.sections[section].viewForFooterInSection(tableView, section);
 }
+
+- (nullable UIContextMenuConfiguration *)tableView:(UITableView *)tableView contextMenuConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath point:(CGPoint)point  API_AVAILABLE(ios(13.0)){
+    return self.sections[indexPath.section].rows[indexPath.row].contextMenuConfigurationForRowAtIndexPath? self.sections[indexPath.section].rows[indexPath.row].contextMenuConfigurationForRowAtIndexPath(tableView, indexPath,point) : nil;
+}
+
 
 @end
